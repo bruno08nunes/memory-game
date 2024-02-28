@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link rel="stylesheet" href="../styles/style.css" />
+
+        <script src="../scripts/game.js" defer></script>
+
+        <title>Memory Game</title>
+        <link
+            rel="shortcut icon"
+            href="../assets/brain.png"
+            type="image/x-icon"
+        />
+    </head>
+    <body>
+        <div class="modal-win">
+            <h2>Parabéns, <span class="win-player"></span>!</h2>
+            <p>Seu tempo foi de <span class="win-time"></span> segundos.</p>
+            <div>
+                <a
+                    href="scoreboard.html"
+                    class="login-button"
+                    style="max-width: min-content"
+                >
+                    Ver classificação
+                </a>
+                <a
+                    href="../index.html"
+                    class="login-button"
+                    style="max-width: min-content"
+                >
+                    Login
+                </a>
+                <button
+                    type="button"
+                    class="login-button"
+                    id="reset-game"
+                    style="max-width: min-content"
+                >
+                    Recomeçar Jogo
+                </button>
+            </div>
+        </div>
+        <main class="main">
+            <header>
+                <span class="player"></span>
+                <span>Tempo: <span class="timer">00</span></span>
+            </header>
+            <section class="grid"></section>
+        </main>
+    </body>
+</html>

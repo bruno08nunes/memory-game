@@ -22,17 +22,19 @@ const createRow = ({ player, currentTime }, position) => {
     let totalTime;
     if (winners) {
         winners.forEach(createRow);
-        totalTime = winners.reduce((prevValue, {currentTime: value}) => +prevValue + +value, 0);
+        totalTime = winners.reduce(
+            (prevValue, { currentTime: value }) => +prevValue + +value,
+            0
+        );
 
         const tdTotalTime = document.querySelector("tfoot td");
         tdTotalTime.textContent = totalTime;
-        return
+        return;
     }
     const table = document.querySelector(".div-table");
     table.style.display = "none";
-    const message = document.querySelector(".message")
+    const message = document.querySelector(".message");
     message.style.display = "block";
-})()
+})();
 
 // ! Responsivdade
-// ! Modal mostrando mensagem de vitória, com botão para tela de login, recomeçar o jogo e classificação

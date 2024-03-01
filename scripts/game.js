@@ -29,7 +29,7 @@ const alertWin = (winner) => {
     const modal = document.querySelector(".modal-win");
     const spanPlayer = document.querySelector(".win-player");
     const spanTime = document.querySelector(".win-time");
-    
+
     modal.style.display = "flex";
     spanPlayer.textContent = winner.player;
     spanTime.textContent = winner.currentTime;
@@ -40,78 +40,78 @@ const setWinners = (winner) => {
     const newWinners = [...winners, winner];
     const winnersSorted = newWinners.sort(
         ({ currentTime: currentTime1 }, { currentTime: currentTime2 }) =>
-        currentTime1 - currentTime2
-        );
-        localStorage.setItem("MMR_GM-winners", JSON.stringify(winnersSorted));
-    };
-    
-    const checkEndGame = () => {
-        const currentTime = spanTimer.textContent;
-        const player = spanPlayer.textContent;
-        const winner = { player, currentTime };
-        const disabledCards = document.querySelectorAll(".disabled-card");
-        
-        if (disabledCards.length === 20) {
-            clearInterval(timer);
-            setWinners(winner);
-            alertWin(winner);
-        }
-    };
-    
-    const checkCard = () => {
-        const firstCharacter = firstCard.getAttribute("data-character");
-        const secondCharacter = secondCard.getAttribute("data-character");
-        
-        if (firstCharacter === secondCharacter) {
-            setTimeout(() => {
-                firstCard.classList.add("disabled-card");
-                secondCard.classList.add("disabled-card");
-                firstCard = "";
-                secondCard = "";
-                
-                checkEndGame();
-            }, 400);
-        } else {
-            setTimeout(() => {
-                firstCard.classList.remove("reveal-card");
-                secondCard.classList.remove("reveal-card");
-                
-                firstCard = "";
-                secondCard = "";
-            }, 900);
-        }
-    };
-    
-    const revealCard = ({ target }) => {
-        const card = target.parentNode;
-        if (card.classList.contains("reveal-card")) {
-            return;
-        }
-        if (firstCard === "") {
-            card.classList.add("reveal-card");
-            firstCard = card;
-            return;
-        }
-        if (secondCard === "") {
-            card.classList.add("reveal-card");
-            secondCard = card;
-            checkCard();
-        }
-    };
-    
-    const createCard = (character) => {
-        const card = createElement("div", "card");
-        const front = createElement("div", "front", "face");
-        const back = createElement("div", "back", "face");
-        
-        front.style.backgroundImage = `url("../assets/${character}.png")`;
-        
-        card.appendChild(front);
-        card.appendChild(back);
-        
-        card.addEventListener("click", revealCard);
+            currentTime1 - currentTime2
+    );
+    localStorage.setItem("MMR_GM-winners", JSON.stringify(winnersSorted));
+};
+
+const checkEndGame = () => {
+    const currentTime = spanTimer.textContent;
+    const player = spanPlayer.textContent;
+    const winner = { player, currentTime };
+    const disabledCards = document.querySelectorAll(".disabled-card");
+
+    if (disabledCards.length === 20) {
+        clearInterval(timer);
+        setWinners(winner);
+        alertWin(winner);
+    }
+};
+
+const checkCard = () => {
+    const firstCharacter = firstCard.getAttribute("data-character");
+    const secondCharacter = secondCard.getAttribute("data-character");
+
+    if (firstCharacter === secondCharacter) {
+        setTimeout(() => {
+            firstCard.classList.add("disabled-card");
+            secondCard.classList.add("disabled-card");
+            firstCard = "";
+            secondCard = "";
+
+            checkEndGame();
+        }, 400);
+    } else {
+        setTimeout(() => {
+            firstCard.classList.remove("reveal-card");
+            secondCard.classList.remove("reveal-card");
+
+            firstCard = "";
+            secondCard = "";
+        }, 900);
+    }
+};
+
+const revealCard = ({ target }) => {
+    const card = target.classList.contains("card") ? target : target.parentNode;
+    if (card.classList.contains("reveal-card")) {
+        return;
+    }
+    if (firstCard === "") {
+        card.classList.add("reveal-card");
+        firstCard = card;
+        return;
+    }
+    if (secondCard === "") {
+        card.classList.add("reveal-card");
+        secondCard = card;
+        checkCard();
+    }
+};
+
+const createCard = (character) => {
+    const card = createElement("div", "card");
+    const front = createElement("div", "front", "face");
+    const back = createElement("div", "back", "face");
+
+    front.style.backgroundImage = `url("../assets/${character}.png")`;
+
+    card.appendChild(front);
+    card.appendChild(back);
+
+    card.addEventListener("click", revealCard);
     card.setAttribute("data-character", character);
-    
+
     return card;
 };
 
